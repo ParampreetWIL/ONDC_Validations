@@ -2149,6 +2149,8 @@ paths:
                                         minItems: 1
                                         items:
                                           properties:
+                                            id:
+                                              type: string
                                             vehicle:
                                               properties:
                                                 category:
@@ -2182,6 +2184,8 @@ paths:
                                         items:
                                           type: object
                                           properties:
+                                            id:
+                                              type: string
                                             descriptor:
                                               type: object
                                               properties:
@@ -2199,6 +2203,8 @@ paths:
                                                 value:
                                                   type: string
                                                   pattern: ^-?\d+(\.\d+)?$
+                                                currency:
+                                                  type: string
                                               required:
                                                 - value
                                                 - currency
@@ -2955,6 +2961,8 @@ paths:
                                                       - RIDE_CANCELLED
                                                 required:
                                                   - code
+                                    required:
+                                      - items
                         - properties:
                             message:
                               properties:
@@ -3063,6 +3071,9 @@ paths:
                                               - category
                                         required:
                                           - vehicle
+                                  required:
+                                    - fulfillments
+                                      
                     - $ref: '#/paths/~1on_init/post/requestBody/content/application~1json/schema/allOf/1/allOf/6'
                     - properties:
                         message:
@@ -4210,6 +4221,9 @@ components:
             The duration in ISO8601 format after timestamp for which this
             message holds valid
           type: string
+      required:
+        - bap_id
+        - bpp_id
     Country:
       description: Describes a country
       type: object
@@ -4257,6 +4271,7 @@ components:
           type: string
         code:
           type: string
+          pattern: '[0-9A-Z]*'
         short_desc:
           type: string
         long_desc:
@@ -4281,6 +4296,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Image'
+      required: 
+        - name
     Domain:
       description: >-
         Described the industry sector or sub-sector. The network policy should
@@ -5051,6 +5068,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TagGroup'
+      required:
+        - items
+        - id
     Organization:
       description: An organization. Usually a recognized business entity.
       type: object
@@ -17686,19 +17706,19 @@ x-attributes:
                   usage: AUTO_RICKSHAW
                   description: Describes vehicle category
                 make:
-                  required: optional
+                  required: mandatory
                   type: string
                   owner: BPP
                   usage: Bajaj
                   description: Describes vehicle manufacturer
                 model:
-                  required: optional
+                  required: mandatory
                   type: string
                   owner: BPP
                   usage: compact-re
                   description: Describes vehicle model
                 registration:
-                  required: optional
+                  required: mandatory
                   type: string
                   owner: BPP
                   usage: HR-20AS-4578
@@ -19381,19 +19401,19 @@ x-attributes:
                 usage: '--'
                 description: Describes the unique code for the cancellation terms
             status:
-              required: optional
+              required: mandatory
               type: string
               owner: BPP
               usage: ACTIVE
               description: Describes the order status.
             created_at:
-              required: optional
+              required: mandatory
               type: string
               owner: BPP
               usage: '2023-12-10T08:03:34.294Z'
               description: Describes the date-time of creation of this order
             updated_at:
-              required: optional
+              required: mandatory
               type: string
               owner: BPP
               usage: '2023-12-10T08:03:34.294Z'
